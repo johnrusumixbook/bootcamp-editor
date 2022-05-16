@@ -1,0 +1,4 @@
+.drawnShape:hover{
+    stroke: red;
+    stroke-width: 1px;
+}

@@ -2,12 +2,8 @@ import { useState } from "react";
 import Palette from "../palette/palette";
 import Workspace from "../workspace/workspace";
 import "./editor.css";
-import { useDrop } from "react-dnd";
 import ShapeModel from "../../data/shapeModel";
-import WorkspaceModel from "../../data/workspaceModel";
-import { DragTypeEnum } from "../../data/dragTypeEnum";
 import { ShapeTypeEnum } from "../../data/shapeTypeEnum";
-import { log } from "console";
 
 const PaletteItems: ShapeModel[] = [
   new ShapeModel(
@@ -28,24 +24,10 @@ const PaletteItems: ShapeModel[] = [
 ];
 
 const Editor = () => {
-  const [workspace, setWorkspace] = useState(new WorkspaceModel());
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: DragTypeEnum.SVG,
-    drop: (item: ShapeModel, monitor) => addSvgToWorkspace(item, monitor),
-    collect: (monitor) => ({ isOver: !!monitor.isOver }),
-  }));
-
-  const addSvgToWorkspace = (item: ShapeModel, monitor: any) => {
-    console.log(monitor);
-    let newState = { ...workspace };
-    newState.items.push(item);
-    setWorkspace(newState);
-  };
-
   return (
     <div className="editor">
       <Palette items={PaletteItems} />
-      <Workspace items={workspace.items} dropHook={drop} />
+      <Workspace />
     </div>
   );
 };

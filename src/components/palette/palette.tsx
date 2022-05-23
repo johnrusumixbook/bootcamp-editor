@@ -10,8 +10,8 @@ interface IPaletteModel {
 const Palette = (props: IPaletteModel) => {
   return (
     <div className="palette">
-      {props.items.map((item) => (
-        <Shape model={item} />
+      {props.items.map((item, i) => (
+        <Shape model={item} key={i} />
       ))}
     </div>
   );

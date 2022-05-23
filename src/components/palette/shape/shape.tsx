@@ -24,7 +24,6 @@ const Shape = (props: IShapeModel) => {
     >
       <svg
         ref={drag}
-        id={props.model.id}
         width="50"
         height="50"
         version="1.1"

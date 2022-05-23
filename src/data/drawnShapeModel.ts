@@ -1,4 +1,5 @@
 import { ShapeTypeEnum } from "./shapeTypeEnum";
+import {v4 as uuidv4} from 'uuid';
 
 export class DrawnShapeModel{
     id: string;
@@ -8,7 +9,7 @@ export class DrawnShapeModel{
     width: number;
     height: number;
 
-    constructor(id:string, x: number, y: number, type: ShapeTypeEnum, width: number, height: number){
+    constructor( x: number, y: number, type: ShapeTypeEnum, width: number, height: number, id:string = uuidv4(),){
         this.id = id;
         this.x = x;
         this.y = y;
@@ -16,4 +17,6 @@ export class DrawnShapeModel{
         this.width = width;
         this.height = height;
     }
+    
+    
 }

@@ -1,8 +1,8 @@
-import ShapeModel from "./shapeModel";
+import { DrawnShapeModel } from "./drawnShapeModel";
 
 export default class WorkspaceModel{
-    items: ShapeModel[]
-    constructor(items: ShapeModel[] = new Array<ShapeModel>()){
+    items: DrawnShapeModel[]
+    constructor(items: DrawnShapeModel[] = new Array<DrawnShapeModel>()){
         this.items = items;
     }
 }

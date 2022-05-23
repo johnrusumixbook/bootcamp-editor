@@ -17,11 +17,7 @@ const Shape = (props: IShapeModel) => {
     },
   }));
   return (
-    <div
-      className="shape"
-      style={{ border: isDragging ? "5px solid pink" : "0px" }}
-      ref={drag}
-    >
+    <div className="shape" ref={drag}>
       <svg
         ref={drag}
         width="50"

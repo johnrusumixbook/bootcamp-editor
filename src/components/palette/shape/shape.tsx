@@ -12,9 +12,7 @@ const Shape = (props: IShapeModel) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: DragTypeEnum.SVG,
     item: props.model,
-    collect: (monitor) => {
-      return { isDragging: !!monitor.isDragging };
-    },
+    collect: ({ isDragging }) => ({ isDragging }),
   }));
   return (
     <div className="shape" ref={drag}>

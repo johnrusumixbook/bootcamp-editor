@@ -8,9 +8,21 @@
     justify-content: center;
     padding: 40px;
   }
+
+  /* .workspace svg {
+    display: block;
+    stroke: #88a1c7;
+    fill: #dce8fa;
+    stroke-width: 3px;
+  } */
+
 .canvas {
-    width: 100%;
     background: #fff;
     border: 2px #ddd solid;
-    max-width: 1200px;
+    max-width: 1200px;   
+    display: block;
+    stroke: #88a1c7;
+    fill: #dce8fa;
+    stroke-width: 3px;
 }
+

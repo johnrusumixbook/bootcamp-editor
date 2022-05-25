@@ -1,10 +1,14 @@
-import React from 'react';
-import './App.css';
-import Editor from './components/editor/editor';
+import React from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import "./App.css";
+import Editor from "./components/editor/editor";
 
 function App() {
   return (
-    <Editor/>
+    <DndProvider backend={HTML5Backend}>
+      <Editor />
+    </DndProvider>
   );
 }
 

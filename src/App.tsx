@@ -1,14 +1,22 @@
 import React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import "./App.css";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import Editor from "./components/editor/editor";
+import { rootReducer } from "./data/redux/rootReducer";
+import "./App.css";
+
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware()));
 
 function App() {
   return (
-    <DndProvider backend={HTML5Backend}>
-      <Editor />
-    </DndProvider>
+    <Provider store={store}>
+      <DndProvider backend={HTML5Backend}>
+        <Editor />
+      </DndProvider>
+    </Provider>
   );
 }
 

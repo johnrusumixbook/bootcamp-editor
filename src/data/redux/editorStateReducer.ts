@@ -1,27 +1,25 @@
-import { AddInArrayById } from "../../helpers/core/addInArrayById";
+import { addInArrayById } from "../../helpers/core/addInArrayById";
 import { logError } from "../../helpers/core/customLogger";
-import { EditInArrayById } from "../../helpers/core/editInArrayById";
-import { RemoveFromArrayById } from "../../helpers/core/removeFromArrayById";
+import { editInArrayById } from "../../helpers/core/editInArrayById";
+import { removeFromArrayById } from "../../helpers/core/removeFromArrayById";
 import { DrawnShapeModel } from "../drawnShapeModel";
-import { ShapeTypeEnum } from "../shapeTypeEnum";
 import { ActionModel } from "../state/actionModel";
 import { ActionType } from "../state/actionType";
 
-const defaultState = [new DrawnShapeModel(20,10,ShapeTypeEnum.CIRLCE, 10, 10, "some_id")];
+const defaultState:DrawnShapeModel[] = [];
 
-export const EditorStateReducer = (editorState: DrawnShapeModel[] = defaultState, action: ActionModel): DrawnShapeModel[] => {
-    console.log("history reducer");
+export const EditorStateReducer = (editorState: any = [], action: ActionModel): DrawnShapeModel[] => {
     switch(action.type){
         case ActionType.SET_EDITOR:
-            return [...editorState];
+            return action.payload ?? [];
         case ActionType.ADD_EDITOR_ITEM:
-            return AddInArrayById<DrawnShapeModel>(editorState, action.payload.id);
+            return addInArrayById(editorState, action.payload);
         case ActionType.EDIT_EDITOR_ITEM:
-                return EditInArrayById<DrawnShapeModel>(editorState, action.payload.id);
+            return editInArrayById(editorState, action.payload);
         case ActionType.REMOVE_EDITOR_ITEM:
-                return RemoveFromArrayById<DrawnShapeModel>(editorState, action.payload.id);
+            return removeFromArrayById(editorState, action.payload);
         default: 
             logError("ActionType is out of range for ");
-            return [...editorState];
+            return editorState;
     }
 }

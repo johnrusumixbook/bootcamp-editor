@@ -7,9 +7,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import Editor from "./components/editor/editor";
 import { rootReducer } from "./data/redux/rootReducer";
 import "./App.css";
+import thunk from "redux-thunk";
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware()));
-
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 function App() {
   return (
     <Provider store={store}>

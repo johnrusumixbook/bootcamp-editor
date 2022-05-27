@@ -1,54 +1,36 @@
-import React, { useCallback, useRef, useState } from "react";
-import {
-  DropTargetMonitor,
-  useDragDropManager,
-  useDrop,
-  XYCoord,
-} from "react-dnd";
+import React from "react";
+import { DropTargetMonitor, useDrop, XYCoord } from "react-dnd";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { DragTypeEnum } from "../../data/dragTypeEnum";
 import { DrawnShapeModel } from "../../data/drawnShapeModel";
 import ShapeModel from "../../data/shapeModel";
-import WorkspaceModel from "../../data/workspaceModel";
+import { ActionType } from "../../data/state/actionType";
+import { StateModel } from "../../data/state/stateModel";
 import { mapPixelsToSvgCoordinate } from "../../helpers/ui/svg";
 import DrawnShape from "./drawnShape/drawnShape";
+import { useItemDrag } from "./useItemDrag";
 import "./workspace.css";
 
 const Workspace = () => {
-  const [workspace, setWorkspace] = useState(new WorkspaceModel());
-  const dragDropManager = useDragDropManager();
-  const monitor = dragDropManager.getMonitor();
+  const dispatch = useDispatch();
   const svgViewportWidth = 1200;
   const svgViewportHeight = 600;
-  const stateRef = useRef<WorkspaceModel>();
-  stateRef.current = workspace;
-
-  monitor.subscribeToOffsetChange(() => {
-    let item = monitor.getItem();
-    if (!item) return;
-    let delta = monitor.getDifferenceFromInitialOffset() as XYCoord;
-    if (!delta || (delta.x === 0 && delta.y === 0)) return;
-    //To verify if i drag existing or new. To create array only then dragging existing
-    let stateNewItems: DrawnShapeModel[] = [];
-    const rect: DOMRect = document
-      .getElementById("some_id")
-      ?.getBoundingClientRect() as DOMRect;
-    for (let i = 0; i < workspace.items.length; i++) {
-      let tempItem = workspace.items[i];
-      if (tempItem.id === item.id) {
-        stateNewItems.push({
-          ...tempItem,
-          x:
-            item.x +
-            mapPixelsToSvgCoordinate(rect.width, svgViewportWidth, delta.x),
-          y:
-            item.y +
-            mapPixelsToSvgCoordinate(rect.height, svgViewportHeight, delta.y),
-        });
-      } else {
-        stateNewItems.push(tempItem);
-      }
-    }
-    setWorkspace({ items: stateNewItems });
+  const state = useSelector((state: StateModel) => {
+    return state.editorState;
+  });
+  useItemDrag((item, x, y) => {
+    dispatch({
+      type: ActionType.EDIT_EDITOR_ITEM,
+      payload: new DrawnShapeModel(
+        x,
+        y,
+        item.type,
+        item.width,
+        item.height,
+        item.id
+      ),
+    });
   });
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -69,20 +51,13 @@ const Workspace = () => {
     if (item instanceof DrawnShapeModel) {
       return;
     }
-    let stateNewItems: DrawnShapeModel[] = [];
-    if (stateRef?.current?.items) {
-      stateNewItems = new Array<DrawnShapeModel>().concat(
-        stateRef.current.items
-      );
-    }
-
     let dragOffset = monitor.getClientOffset() as XYCoord;
     const rect: DOMRect = document
       .getElementById("some_id")
       ?.getBoundingClientRect() as DOMRect;
-
-    stateNewItems.push(
-      new DrawnShapeModel(
+    dispatch({
+      type: ActionType.ADD_EDITOR_ITEM,
+      payload: new DrawnShapeModel(
         mapPixelsToSvgCoordinate(
           rect.width,
           svgViewportWidth,
@@ -96,9 +71,8 @@ const Workspace = () => {
         item.type,
         50,
         50
-      )
-    );
-    setWorkspace({ items: stateNewItems });
+      ),
+    });
   };
 
   return (
@@ -113,7 +87,7 @@ const Workspace = () => {
           drop(element);
         }}
       >
-        {workspace.items.map((item, i) => (
+        {state.map((item, i) => (
           <DrawnShape model={item} key={i} />
         ))}
       </svg>

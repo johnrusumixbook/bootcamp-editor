@@ -8,10 +8,11 @@ import Editor from "./components/editor/editor";
 import { rootReducer } from "./data/redux/rootReducer";
 import "./App.css";
 import thunk from "redux-thunk";
+import { stateSyncMiddleware } from "./data/redux/stateSyncMiddleware";
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk, stateSyncMiddleware))
 );
 function App() {
   return (

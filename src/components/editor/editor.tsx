@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Palette from "../palette/palette";
 import Workspace from "../workspace/workspace";
 import "./editor.css";
 import ShapeModel from "../../data/shapeModel";
 import { ShapeTypeEnum } from "../../data/shapeTypeEnum";
+import { initStateThunk } from "../../data/redux/thunks";
+import { useDispatch } from "react-redux";
 
 const PaletteItems: ShapeModel[] = [
   new ShapeModel(
@@ -24,6 +26,12 @@ const PaletteItems: ShapeModel[] = [
 ];
 
 const Editor = () => {
+  const dispatch: any = useDispatch();
+
+  useEffect(() => {
+    dispatch(initStateThunk());
+  }, [dispatch]);
+
   return (
     <div className="editor">
       <Palette items={PaletteItems} />

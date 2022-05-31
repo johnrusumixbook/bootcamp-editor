@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useDrag } from "react-dnd";
 import { DragTypeEnum } from "../../../data/dragTypeEnum";
 import { DrawnShapeModel } from "../../../data/drawnShapeModel";
@@ -88,4 +89,4 @@ const DrawnShape = (props: IDrawnShape) => {
   }
 };
 
-export default DrawnShape;
+export default memo(DrawnShape);

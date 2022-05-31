@@ -17,6 +17,4 @@ export class DrawnShapeModel{
         this.width = width;
         this.height = height;
     }
-    
-    
 }

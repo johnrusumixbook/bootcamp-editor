@@ -16,9 +16,8 @@ const Workspace = () => {
   const dispatch = useDispatch();
   const svgViewportWidth = 1200;
   const svgViewportHeight = 600;
-  const state = useSelector((state: StateModel) => {
-    return state.editorState;
-  });
+  const state = useSelector((state: StateModel) => state.editorState);
+
   useItemDrag((item, x, y) => {
     dispatch({
       type: ActionType.EDIT_EDITOR_ITEM,

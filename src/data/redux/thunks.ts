@@ -10,7 +10,7 @@ export const initStateThunk = ()=>{
     return (dispatch:Dispatch)=>{
         return remoteState.getAsync()
         .then((state:StateModel)=>{
-            dispatch({...new ActionModel(ActionType.SET_EDITOR, state.editorState)});
+            dispatch({type: ActionType.SET_EDITOR, payload: state.editorState});
         }).catch((e)=>{
             logError(e);
         })

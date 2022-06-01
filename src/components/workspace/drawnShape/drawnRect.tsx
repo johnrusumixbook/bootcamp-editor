@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { ConnectDragSource } from "react-dnd";
 import { DrawnShapeModel } from "../../../data/drawnShapeModel";
 import { SelectionDots } from "./selectionDots";
@@ -8,10 +9,18 @@ interface IDrawnRectProps {
   onSelection: any;
 }
 
+const BORDER_THICKNESS = 5;
+
 export const DrawnRect = (props: IDrawnRectProps) => {
-  let borderThikness = 5;
+  const onClickCB = useCallback(
+    (event: any) => {
+      props.onSelection(event, props.model);
+    },
+    [props]
+  );
+
   return (
-    <g className="gstyle">
+    <g>
       <rect
         className="drawnShape"
         id={props.model.id}
@@ -21,26 +30,18 @@ export const DrawnRect = (props: IDrawnRectProps) => {
         height={props.model.height}
       />
       <foreignObject
-        className="gstyle"
-        x={props.model.x - borderThikness}
-        y={props.model.y - borderThikness}
-        height={props.model.height + borderThikness * 2}
-        width={props.model.width + borderThikness * 2}
+        x={props.model.x - BORDER_THICKNESS}
+        y={props.model.y - BORDER_THICKNESS}
+        height={props.model.height + BORDER_THICKNESS * 2}
+        width={props.model.width + BORDER_THICKNESS * 2}
       >
         <div
-          style={{ padding: borderThikness }}
-          className={
-            props.model.isSelected
-              ? "drawnShape__foreignObject selected"
-              : "drawnShape__foreignObject"
-          }
+          style={{ padding: BORDER_THICKNESS }}
+          className={`drawnShape__foreignObject ${
+            props.model.isSelected ? "selected" : ""
+          }`}
         >
-          <div
-            className="drawnShape__foreignObject"
-            onClick={(event: any) => {
-              props.onSelection(event, props.model);
-            }}
-          >
+          <div className="drawnShape__foreignObject" onClick={onClickCB}>
             <SelectionDots
               isSelected={props.model.isSelected}
               model={props.model}

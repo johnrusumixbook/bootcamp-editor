@@ -10,7 +10,7 @@ interface ISelectionDotsProps {
 }
 
 export const SelectionDots = (props: ISelectionDotsProps) => {
-  const [{}, resizeTLRef, previewTL] = useDrag(
+  const [, resizeTLRef, previewTL] = useDrag(
     () => ({
       type: DragTypeEnum.RESIZE,
       item: new DrawnShapeResizeModel(props.model, 1, 1, -1, -1),
@@ -19,7 +19,7 @@ export const SelectionDots = (props: ISelectionDotsProps) => {
     [props.model]
   );
 
-  const [{}, resizeTCRef, previewTC] = useDrag(
+  const [, resizeTCRef, previewTC] = useDrag(
     () => ({
       type: DragTypeEnum.RESIZE,
       item: new DrawnShapeResizeModel(props.model, 0, 1, 0, -1),
@@ -28,7 +28,7 @@ export const SelectionDots = (props: ISelectionDotsProps) => {
     [props.model]
   );
 
-  const [{}, resizeTRRef, previewTR] = useDrag(
+  const [, resizeTRRef, previewTR] = useDrag(
     () => ({
       type: DragTypeEnum.RESIZE,
       item: new DrawnShapeResizeModel(props.model, 0, 1, 1, -1),
@@ -37,7 +37,7 @@ export const SelectionDots = (props: ISelectionDotsProps) => {
     [props.model]
   );
 
-  const [{}, resizeLCRef, previewLC] = useDrag(
+  const [, resizeLCRef, previewLC] = useDrag(
     () => ({
       type: DragTypeEnum.RESIZE,
       item: new DrawnShapeResizeModel(props.model, 1, 0, -1, 0),
@@ -46,7 +46,7 @@ export const SelectionDots = (props: ISelectionDotsProps) => {
     [props.model]
   );
 
-  const [{}, resizeRCRef, previewRC] = useDrag(
+  const [, resizeRCRef, previewRC] = useDrag(
     () => ({
       type: DragTypeEnum.RESIZE,
       item: new DrawnShapeResizeModel(props.model, 0, 0, 1, 0),
@@ -55,7 +55,7 @@ export const SelectionDots = (props: ISelectionDotsProps) => {
     [props.model]
   );
 
-  const [{}, resizeBLRef, previewBL] = useDrag(
+  const [, resizeBLRef, previewBL] = useDrag(
     () => ({
       type: DragTypeEnum.RESIZE,
       item: new DrawnShapeResizeModel(props.model, 1, 0, -1, 1),
@@ -64,7 +64,7 @@ export const SelectionDots = (props: ISelectionDotsProps) => {
     [props.model]
   );
 
-  const [{}, resizeBCRef, previewBC] = useDrag(
+  const [, resizeBCRef, previewBC] = useDrag(
     () => ({
       type: DragTypeEnum.RESIZE,
       item: new DrawnShapeResizeModel(props.model, 0, 0, 0, 1),
@@ -73,7 +73,7 @@ export const SelectionDots = (props: ISelectionDotsProps) => {
     [props.model]
   );
 
-  const [{}, resizeBRRef, previewBR] = useDrag(
+  const [, resizeBRRef, previewBR] = useDrag(
     () => ({
       type: DragTypeEnum.RESIZE,
       item: new DrawnShapeResizeModel(props.model, 0, 0, 1, 1),
@@ -109,5 +109,6 @@ export const SelectionDots = (props: ISelectionDotsProps) => {
         <div className="dot dot_br" ref={resizeBRRef} />
       </>
     );
-  } else return <></>;
+  }
+  return <></>;
 };

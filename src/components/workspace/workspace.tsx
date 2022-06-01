@@ -15,8 +15,8 @@ import "./workspace.css";
 
 const Workspace = () => {
   const dispatch = useDispatch();
-  const svgViewportWidth = 1200;
-  const svgViewportHeight = 600;
+  const SVG_VIEWPORT_WIDTH = 1200;
+  const SVG_VIEWPORT_HEIGHT = 600;
   const state = useSelector((state: StateModel) => state.editorState);
 
   useItemDrag((item, x, y) => {
@@ -92,12 +92,12 @@ const Workspace = () => {
       payload: new DrawnShapeModel(
         mapPixelsToSvgCoordinate(
           rect.width,
-          svgViewportWidth,
+          SVG_VIEWPORT_WIDTH,
           dragOffset.x - rect.x
         ),
         mapPixelsToSvgCoordinate(
           rect.height,
-          svgViewportHeight,
+          SVG_VIEWPORT_HEIGHT,
           dragOffset.y - rect.y
         ),
         item.type,

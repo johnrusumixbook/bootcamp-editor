@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { ConnectDragSource, DragPreviewImage } from "react-dnd";
 import { DrawnShapeModel } from "../../../data/drawnShapeModel";
 import { SelectionDots } from "./selectionDots";
@@ -8,10 +9,18 @@ interface IDrawnCircleProps {
   onSelection: any;
 }
 
+const BORDER_THICKNESS = 5;
+
 export const DrawnCircle = (props: IDrawnCircleProps) => {
-  let borderThikness = 5;
+  const onClickCB = useCallback(
+    (event: any) => {
+      props.onSelection(event, props.model);
+    },
+    [props]
+  );
+
   return (
-    <g className="gstyle">
+    <g>
       <ellipse
         className="drawnShape"
         id={props.model.id}
@@ -21,19 +30,16 @@ export const DrawnCircle = (props: IDrawnCircleProps) => {
         ry={props.model.height / 2}
       />
       <foreignObject
-        className="gstyle"
-        x={props.model.x - borderThikness}
-        y={props.model.y - borderThikness}
-        width={props.model.width + borderThikness * 2}
-        height={props.model.height + borderThikness * 2}
+        x={props.model.x - BORDER_THICKNESS}
+        y={props.model.y - BORDER_THICKNESS}
+        width={props.model.width + BORDER_THICKNESS * 2}
+        height={props.model.height + BORDER_THICKNESS * 2}
       >
         <div
-          className={
-            props.model.isSelected
-              ? "drawnShape__foreignObject selected"
-              : "drawnShape__foreignObject"
-          }
-          onClick={(e) => props.onSelection(e, props.model)}
+          className={`drawnShape__foreignObject ${
+            props.model.isSelected ? "selected" : ""
+          }`}
+          onClick={onClickCB}
         >
           <SelectionDots
             isSelected={props.model.isSelected}

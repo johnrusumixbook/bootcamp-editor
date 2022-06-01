@@ -5,8 +5,8 @@ import { mapPixelsToSvgCoordinate } from "../../helpers/ui/svg";
 
 type Callback = (item: DrawnShapeModel, x:number, y:number) => void; 
 
-const svgViewportWidth = 1200;
-const svgViewportHeight = 600;
+const SVG_VIEWPORT_WIDTH = 1200;
+const SVG_VIEWPORT_HEIGHT = 600;
 
 export const  useItemDrag = (callback: Callback) =>{
     const monitor = useDragDropManager().getMonitor();
@@ -17,8 +17,8 @@ export const  useItemDrag = (callback: Callback) =>{
             let delta = monitor.getDifferenceFromInitialOffset() as XYCoord;
             if(!delta) return;
             const rect: DOMRect = document.getElementById("some_id")?.getBoundingClientRect() as DOMRect;          
-            const x = item.x +  mapPixelsToSvgCoordinate(rect.width, svgViewportWidth, delta.x);
-            const y = item.y + mapPixelsToSvgCoordinate(rect.height, svgViewportHeight, delta.y);   
+            const x = item.x +  mapPixelsToSvgCoordinate(rect.width, SVG_VIEWPORT_WIDTH, delta.x);
+            const y = item.y + mapPixelsToSvgCoordinate(rect.height, SVG_VIEWPORT_HEIGHT, delta.y);   
             callback(item, x, y);
         }
     });

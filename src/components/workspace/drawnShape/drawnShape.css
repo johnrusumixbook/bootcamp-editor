@@ -2,3 +2,71 @@
     width: 100%;
     height: 100%;
 }
+
+div{
+    box-sizing: border-box;
+}
+.selected{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    border: 5px solid #000;
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+.dot{
+    background-color: red;
+    width: 10px;
+    height: 10px;
+}
+.dot_tl{
+    position: absolute;
+    left: -7px;
+    top:-7px;
+    cursor: nw-resize;
+
+}
+.dot_tc{
+    position: absolute;
+    top: -7px;
+    left: calc(100% - 50% - 5px);
+    cursor: n-resize;
+}
+.dot_tr{
+    position: absolute;
+    right: -7px;
+    top:-7px;
+    cursor: ne-resize;
+}
+.dot_lc{
+    position: absolute;
+    top: calc(100% - 50% - 5px);
+    left: -7px;
+    cursor: w-resize;
+}
+.dot_rc{
+    position: absolute;
+    top: calc(100% - 50% - 5px);
+    right: -7px;
+    cursor: e-resize;
+}
+.dot_bl{
+    position: absolute;
+    left: -7px;
+    bottom:-7px;
+    cursor: sw-resize;
+}
+.dot_bc{
+    position: absolute;
+    bottom: -7px;
+    left: calc(100% - 50% - 5px);
+    cursor: s-resize;
+}
+.dot_br{
+    position: absolute;
+    bottom: -7px;
+    right:-7px;
+    cursor: se-resize;
+}

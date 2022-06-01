@@ -10,7 +10,7 @@ interface IShapeModel {
 
 const Shape = (props: IShapeModel) => {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: DragTypeEnum.SVG,
+    type: DragTypeEnum.DRAG,
     item: props.model,
     collect: ({ isDragging }) => ({ isDragging }),
   }));

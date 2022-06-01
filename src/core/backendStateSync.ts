@@ -1,6 +1,8 @@
 import { StorageKeys } from "../data/state/storageKeys";
 import { logError } from "../helpers/core/customLogger";
 import { StateModel } from "../data/state/stateModel"
+import { DrawnShapeModel } from "../data/drawnShapeModel";
+import { ShapeTypeEnum } from "../data/shapeTypeEnum";
 
 interface IGetStoredState{
     getState: ()=> StateModel;
@@ -20,10 +22,18 @@ interface ISetStoredStateAsync{
 
 class StateLocalStorage implements IGetStoredState, ISetStoredState, IGetStoredStateAsync, ISetStoredStateAsync{
     getState = () : StateModel =>{
-        let json = localStorage.getItem(StorageKeys.STATE) ?? "";
+        const json = localStorage.getItem(StorageKeys.STATE) ?? "";
         try{
-            let state: StateModel = JSON.parse(json);
-            return state;
+            const tempState = JSON.parse(json);
+            const editorState:DrawnShapeModel[] = tempState.editorState.map((editorItem:any)=>(new DrawnShapeModel(
+                editorItem.x as number, 
+                editorItem.y as number, 
+                editorItem.type as ShapeTypeEnum,
+                editorItem.width as number,
+                editorItem.height as number,
+                editorItem.id as string,
+                editorItem.isSelected as boolean)));
+            return new StateModel(editorState);
         }
         catch(e){
             logError(e);

@@ -10,6 +10,7 @@ import { StateModel } from "../../data/state/stateModel";
 import { mapPixelsToSvgCoordinate } from "../../helpers/ui/svg";
 import DrawnShape from "./drawnShape/drawnShape";
 import { useItemDrag } from "./useItemDrag";
+import { useItemResize } from "./useItemResize";
 import "./workspace.css";
 
 const Workspace = () => {
@@ -27,13 +28,44 @@ const Workspace = () => {
         item.type,
         item.width,
         item.height,
-        item.id
+        item.id,
+        item.isSelected
       ),
     });
   });
 
+  useItemResize((item, x, y, width, height) => {
+    dispatch({
+      type: ActionType.EDIT_EDITOR_ITEM,
+      payload: new DrawnShapeModel(
+        x,
+        y,
+        item.type,
+        width,
+        height,
+        item.id,
+        item.isSelected
+      ),
+    });
+  });
+
+  const handleSelection = (event: any, item: DrawnShapeModel) => {
+    dispatch({
+      type: ActionType.EDIT_EDITOR_ITEM,
+      payload: new DrawnShapeModel(
+        item.x,
+        item.y,
+        item.type,
+        item.width,
+        item.height,
+        item.id,
+        !item.isSelected
+      ),
+    });
+  };
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: DragTypeEnum.SVG,
+    accept: DragTypeEnum.DRAG,
     drop: (
       item: ShapeModel | DrawnShapeModel,
       monitor: DropTargetMonitor<ShapeModel, unknown>
@@ -50,6 +82,7 @@ const Workspace = () => {
     if (item instanceof DrawnShapeModel) {
       return;
     }
+
     let dragOffset = monitor.getClientOffset() as XYCoord;
     const rect: DOMRect = document
       .getElementById("some_id")
@@ -87,7 +120,11 @@ const Workspace = () => {
         }}
       >
         {state.map((item, i) => (
-          <DrawnShape model={item} key={i} />
+          <DrawnShape
+            model={item}
+            key={item.id}
+            onSelection={handleSelection}
+          />
         ))}
       </svg>
     </div>

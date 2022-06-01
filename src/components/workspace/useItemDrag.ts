@@ -1,4 +1,5 @@
 import { useDragDropManager, XYCoord } from "react-dnd";
+import { DragTypeEnum } from "../../data/dragTypeEnum";
 import { DrawnShapeModel } from "../../data/drawnShapeModel";
 import { mapPixelsToSvgCoordinate } from "../../helpers/ui/svg";
 
@@ -12,10 +13,7 @@ export const  useItemDrag = (callback: Callback) =>{
     monitor.subscribeToOffsetChange(() => {
         let item = monitor.getItem();
         if (!item) return;
-        // console.log(item)
-        // console.log(item instanceof DrawnShapeModel)
-        if(item instanceof DrawnShapeModel){
-            //console.log(item)
+        if(item instanceof DrawnShapeModel && monitor.getItemType() == DragTypeEnum.DRAG){
             let delta = monitor.getDifferenceFromInitialOffset() as XYCoord;
             if(!delta) return;
             const rect: DOMRect = document.getElementById("some_id")?.getBoundingClientRect() as DOMRect;          

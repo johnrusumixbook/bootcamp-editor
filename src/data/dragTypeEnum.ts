@@ -1,3 +1,4 @@
 export enum DragTypeEnum{
-    SVG = "SVG"
+    DRAG = "DRAG",
+    RESIZE = "RESIZE"
 }

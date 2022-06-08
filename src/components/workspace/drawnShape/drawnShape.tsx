@@ -60,4 +60,9 @@ const DrawnShape = (props: IDrawnShape) => {
   }
 };
 
-export default memo(DrawnShape);
+export default memo(
+  DrawnShape,
+  (prev: Readonly<IDrawnShape>, next: Readonly<IDrawnShape>) => {
+    return JSON.stringify(next) === JSON.stringify(prev);
+  }
+);
